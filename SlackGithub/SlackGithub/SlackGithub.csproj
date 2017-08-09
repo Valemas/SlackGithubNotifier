@@ -98,8 +98,6 @@
     <Compile Include="Models\PullRequest.cs" />
     <Compile Include="Models\PullRequestAction.cs" />
     <Compile Include="Models\PullRequestEvent.cs" />
-    <Compile Include="Models\SlackAttachment.cs" />
-    <Compile Include="Models\SlackAttachmentField.cs" />
     <Compile Include="Models\SlackMessage.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
