@@ -1,19 +1,19 @@
 ﻿using System.Threading.Tasks;
-
-using SlackGithub.Models;
-
+using System.Web.Configuration;
 using System.Web.Http;
 
-namespace SlackGithub.Controllers
+using Domain.Models;
+
+namespace SlackGithub.Webservice.Controllers
 {
     
     public class GithubController : ApiController
     {
-        private PullRequestService _pullRequestService;
+        private readonly IPullRequestService _pullRequestService;
 
-        public GithubController()
+        public GithubController(IPullRequestService pullRequestService)
         {
-            _pullRequestService = new PullRequestService(); 
+            _pullRequestService = pullRequestService;
         }
 
         [HttpPost, Route("github/submit")]

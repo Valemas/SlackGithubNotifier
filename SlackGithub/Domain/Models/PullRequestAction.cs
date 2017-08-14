@@ -1,4 +1,4 @@
-﻿namespace SlackGithub.Models
+﻿namespace Domain.Models
 {
     public enum PullRequestAction
     {

@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-using SlackGithub.Models;
+using Domain.Models;
+using Domain.Ports.Persistence;
 
 using SlackWebApiClient;
-using SlackWebApiClient.Models;
 
-namespace SlackGithub
+namespace SlackGithub.Webservice
 {
-    public class PullRequestService
+    public interface IPullRequestService
     {
-        private const string CLIENT_ID = "2717897378.223692818324";
-        private const string CLIENT_SECRET = "f8c7134112cbcf917d3efeca3bebcffc";
-        private const string AUTH_CODE = "xoxp-2717897378-20700026134-223559782067-999e9dc76fb2e49d5c47f53f95cbce59";
-        private readonly Dictionary<int, MessageResponse> _pullRequestMessageDictionary;
+        Task<bool> SendMessage(PullRequestEvent pullRequestEvent);
+    }
+
+    public class PullRequestService : IPullRequestService
+    {
+        private readonly IPullRequestMessageDatastore _messageDatastore;
         private readonly SlackApi _slackApi;
 
-        public PullRequestService()
+        public PullRequestService(IPullRequestMessageDatastore messageDatastore, SlackApi slackApi)
         {
-            _pullRequestMessageDictionary = new Dictionary<int, MessageResponse>();
-            _slackApi = new SlackApi(AUTH_CODE);
+            _messageDatastore = messageDatastore;
+            _slackApi = slackApi;
         }
 
         public async Task<bool> SendMessage(PullRequestEvent pullRequestEvent)
@@ -45,17 +46,16 @@ namespace SlackGithub
         {
             var success = false;
 
-            var text = SlackMessageBuilder.BuildText(pullRequestEvent.PullRequest.Html_Url,
-                pullRequestEvent.Number,
-                pullRequestEvent.PullRequest.Title,
-                pullRequestEvent.PullRequest.User.UserName);
+            var text = pullRequestEvent.CreatedText();
 
             var response = await _slackApi.Chat.PostMessage("bot_testing", text);
 
             if(response.Ok)
             {
-                StoreMessageReference(pullRequestEvent.PullRequestId, response);
-                success = true;
+                var pullRequestMessage = new PullRequestMessage(pullRequestEvent.PullRequestId,
+                    response.Ts,
+                    pullRequestEvent.UserName);
+                success = await _messageDatastore.StorePullRequestMessage(pullRequestMessage);
             }
 
             return success;
@@ -63,32 +63,17 @@ namespace SlackGithub
 
         private async Task<bool> UpdatePrMessageAfterMerge(PullRequestEvent pullRequestEvent)
         {
-            MessageResponse message;
-            var success = _pullRequestMessageDictionary.TryGetValue(pullRequestEvent.PullRequestId, out message);
-            if(!success)
-            {
-                return false;
-            }
+            var success = false;
+            var timestamp = await _messageDatastore.GetPullRequestMessageTimeStamp(pullRequestEvent.PullRequestId,
+                    pullRequestEvent.UserName);
             
-            var response = _slackApi.reac
+            var updateMessage = pullRequestEvent.MergedText("thomas");
+            var response = await _slackApi.Chat.Update("bot_testing", timestamp, updateMessage);
 
             if(response.Ok)
-            {
-                StoreMessageReference(pullRequestEvent.PullRequestId, response);
-            }
-            DeleteMessageReference(pullRequestEvent.PullRequestId);
+                success= await _messageDatastore.DeletePullRequestMessage(pullRequestEvent.PullRequestId, pullRequestEvent.UserName);
 
-            return true;
-        }
-
-        private void StoreMessageReference(int pullRequestId, MessageResponse slackMessage)
-        {
-            _pullRequestMessageDictionary.Add(pullRequestId, slackMessage);
-        }
-
-        private void DeleteMessageReference(int pullRequestId)
-        {
-            _pullRequestMessageDictionary.Remove(pullRequestId);
+            return success;
         }
     }
 }

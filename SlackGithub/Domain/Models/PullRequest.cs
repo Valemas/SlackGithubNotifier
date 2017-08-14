@@ -1,11 +1,16 @@
-﻿namespace SlackGithub.Models
+﻿using Newtonsoft.Json;
+
+namespace Domain.Models
 {
     public class PullRequest
     {
-        public string Html_Url { get; set; }
+        [JsonProperty("html_url")]
+        public string Url { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public User User { get; set; }
         public bool Merged { get; set; }
+
+        public string UserName => User.UserName;
     }
 }
