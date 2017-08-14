@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SlackGithub.Models
+﻿namespace SlackGithub.Models
 {
     public class PullRequest
     {
-        public string html_url { get; set; }
+        public string Html_Url { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public User User { get; set; }
+        public bool Merged { get; set; }
     }
 }

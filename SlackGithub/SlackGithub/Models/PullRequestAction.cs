@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SlackGithub.Models
+﻿namespace SlackGithub.Models
 {
     public enum PullRequestAction
     {
+        Opened,
+        Closed,
+        Reopened,
+        //below are unused
+        Edited,
+        Assigned,
+        Unassigned,
+        review_requested,
+        review_request_removed,
+        Labeled,
+        Unlabeled
     }
 }

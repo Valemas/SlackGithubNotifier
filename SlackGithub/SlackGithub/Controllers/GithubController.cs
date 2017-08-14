@@ -1,4 +1,6 @@
-﻿using SlackGithub.Models;
+﻿using System.Threading.Tasks;
+
+using SlackGithub.Models;
 
 using System.Web.Http;
 
@@ -15,12 +17,12 @@ namespace SlackGithub.Controllers
         }
 
         [HttpPost, Route("github/submit")]
-        public IHttpActionResult Submit([FromBody] PullRequestEvent pullRequestEvent)
+        public async Task<IHttpActionResult> Submit([FromBody] PullRequestEvent pullRequestEvent)
         {
             if(pullRequestEvent == null)
                 return BadRequest();
 
-            if (_pullRequestService.SendMessage(pullRequestEvent))
+            if (await _pullRequestService.SendMessage(pullRequestEvent))
                 return Ok();
 
 
