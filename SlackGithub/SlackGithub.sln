@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlackGithub.Webservice", "SlackGithub\SlackGithub.Webservice.csproj", "{7C34873D-FB8D-4B91-B460-EE852362BD0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Azure.Adapter", "Persistance.Azure.Adapter\Persistence.Azure.Adapter.csproj", "{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{9F11E594-7B14-423B-840B-65553961E808}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{7F1C1575-7440-4EAC-98B9-761E62807706}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C34873D-FB8D-4B91-B460-EE852362BD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C34873D-FB8D-4B91-B460-EE852362BD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C34873D-FB8D-4B91-B460-EE852362BD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C34873D-FB8D-4B91-B460-EE852362BD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F11E594-7B14-423B-840B-65553961E808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F11E594-7B14-423B-840B-65553961E808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F11E594-7B14-423B-840B-65553961E808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F11E594-7B14-423B-840B-65553961E808}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CE74294-BFBC-4CDA-B6D3-9379CA8DF85A} = {7F1C1575-7440-4EAC-98B9-761E62807706}
+	EndGlobalSection
+EndGlobal
